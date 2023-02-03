@@ -12,7 +12,8 @@
 			<MomHudConcEntities />
 			<MomHudDamageIndicator />
 			<MomHudCgaz />
-			<MomHudReticle />
+			<MomHudSjPitchTrainer />
+			<MomHudReticle />	
 		</Panel>
 
 		<!-- Center of screen HUD laid out vertically top-to-bottom -->

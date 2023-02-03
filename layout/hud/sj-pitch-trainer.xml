@@ -1,0 +1,13 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/main.scss" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/common/gamemodes.js" />
+		<include src="file://{resources}/scripts/hud/sj-pitch-trainer.js" />
+	</scripts>
+	
+	<MomHudSjPitchTrainer class="horizontal-align-center full-height">
+		<Panel id="sjpitchtrainer" />
+	</MomHudSjPitchTrainer>
+</root>
