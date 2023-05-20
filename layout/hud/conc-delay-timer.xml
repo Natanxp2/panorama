@@ -1,0 +1,17 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/main.scss" />
+		<include src="file://{resources}/styles/hud/conc-delay-timer.scss" />
+	</styles>
+	<scripts>
+		<include src="file://{resources}/scripts/common/gamemodes.js" />
+		<include src="file://{resources}/scripts/hud/conc-delay-timer.js" />
+	</scripts>
+	
+	<MomHudConcDelayTimer class="horizontal-align-center">
+		<Panel id="concdelaytimer">
+			<Panel id="centerLine" />
+			<Panel id="delayLine" />
+		</Panel>
+	</MomHudConcDelayTimer >
+</root>
