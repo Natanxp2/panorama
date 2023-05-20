@@ -19,6 +19,7 @@ UiToolkitAPI.RegisterHUDPanel2d('MomHudSpecInfo', 'file://{resources}/layout/hud
 UiToolkitAPI.RegisterHUDPanel2d('MomHudSynchronizer', 'file://{resources}/layout/hud/synchronizer.xml');
 UiToolkitAPI.RegisterHUDPanel2d('MomHudPowerupTimer', 'file://{resources}/layout/hud/powerup-timer.xml');
 UiToolkitAPI.RegisterHUDPanel2d('MomHudSjPitchTrainer', 'file://{resources}/layout/hud/sj-pitch-trainer.xml');
+UiToolkitAPI.RegisterHUDPanel2d('MomHudConcDelayTimer', 'file://{resources}/layout/hud/conc-delay-timer.xml');
 
 
 UiToolkitAPI.RegisterPanel2d('ToastManager', 'file://{resources}/layout/util/toast-manager.xml');
