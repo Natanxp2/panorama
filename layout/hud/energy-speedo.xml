@@ -1,0 +1,13 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/main.scss" />
+		<include src="file://{resources}/styles/hud/energy-speedo.scss" />
+	</styles>
+	<scripts>
+		<include src="file://{scripts}/hud/energy-speedo.js" />
+	</scripts>
+	
+	<MomHudEnergySpeedo class="horizontal-align-center">
+		<Label id="EnergySpeedoLabel" text=""/>
+	</MomHudEnergySpeedo>
+</root>
