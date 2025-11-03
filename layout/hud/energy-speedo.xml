@@ -1,0 +1,14 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/main.scss" />
+		<include src="file://{resources}/styles/hud/energy-speedo.scss" />
+	</styles>
+	
+	<scripts>
+		<include type="module" src="file://{scripts}/hud/energy-speedo.ts" />
+	</scripts>
+	
+	<MomHudEnergySpeedo class="energySpeedo">
+        <Label id="energySpeedoPanel" class="speedometers energySpeedo" text="100%"/>
+    </MomHudEnergySpeedo>
+</root>

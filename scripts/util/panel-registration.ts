@@ -26,6 +26,7 @@ declare interface PanelTagNameMap {
 	MomHudStrafeTrainer: MomHudStrafeTrainer;
 	MomHudPowerupTimer: MomHudPowerupTimer;
 	MomHudSafeguardIndicator: MomHudSafeguardIndicator;
+	MomHudEnergySpeedo: MomHudEnergySpeedo;
 	ToastContainer: ToastContainer;
 	ToastGeneric: ToastGeneric;
 	Gallery: Gallery;
@@ -83,3 +84,6 @@ UiToolkitAPI.RegisterHUDPanel2d('MomHudPowerupTimer', 'file://{resources}/layout
 
 declare interface MomHudSafeguardIndicator extends AbstractHudPanel<'MomHudSafeguardIndicator'> {}
 UiToolkitAPI.RegisterHUDPanel2d('MomHudSafeguardIndicator', 'file://{resources}/layout/hud/safeguard-indicator.xml');
+
+declare interface MomHudEnergySpeedo extends AbstractHudPanel<'MomHudEnergySpeedo'> {}
+UiToolkitAPI.RegisterHUDPanel2d('MomHudEnergySpeedo', 'file://{resources}/layout/hud/energy-speedo.xml');
