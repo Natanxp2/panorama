@@ -14,6 +14,7 @@ declare interface PanelTagNameMap {
 	LevelIndicator: LevelIndicator;
 	PlayerCard: PlayerCard;
 	MomHudTimer: MomHudTimer;
+	MomHudKeypressNew: MomHudKeypressNew;
 	MomHudStatus: MomHudStatus;
 	MomHudMapInfo: MomHudMapInfo;
 	MomHudWeaponSelection: MomHudWeaponSelection;
@@ -83,3 +84,6 @@ UiToolkitAPI.RegisterHUDPanel2d('MomHudPowerupTimer', 'file://{resources}/layout
 
 declare interface MomHudSafeguardIndicator extends AbstractHudPanel<'MomHudSafeguardIndicator'> {}
 UiToolkitAPI.RegisterHUDPanel2d('MomHudSafeguardIndicator', 'file://{resources}/layout/hud/safeguard-indicator.xml');
+
+declare interface MomHudKeypressNew extends AbstractHudPanel<'MomHudKeypressNew'> {}
+UiToolkitAPI.RegisterHUDPanel2d('MomHudKeypressNew', 'file://{resources}/layout/hud/keypress_new.xml');

@@ -1,0 +1,14 @@
+<root>
+	<styles>
+		<include src="file://{resources}/styles/main.scss" />
+		<!-- <include src="file://{resources}/styles/key-press.scss" /> -->
+	</styles>
+	
+	<scripts>
+		<include type="module" src="file://{scripts}/hud/keypress.ts" />
+	</scripts>
+
+	<MomHudKeypressNew>
+	</MomHudKeypressNew>
+
+</root>

@@ -60,7 +60,8 @@
 		<Panel id="HudBottomRight" hittest="false" hittestchildren="false">
 			<MomHudDFJump />
 			<MomHudAmmo />
-			<MomHudKeyPress />
+			<MomHudKeypressNew />
+			<!-- <MomHudKeyPress /> -->
 		</Panel>
 
 		<!-- Anchored in top right corner of screen, laid out from top-to-bottom -->
