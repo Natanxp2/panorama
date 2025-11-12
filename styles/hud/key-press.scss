@@ -1,3 +1,27 @@
+MomHudKeypressNew {
+	flow-children: none;
+
+	& Image {
+		padding: 2px;
+		wash-color: #111;
+		opacity: 0;
+	}
+
+	& Image.always-visible {
+		opacity: 0.8;
+	}
+
+	& Image.pressed {
+		wash-color: #eee;
+		opacity: 1;
+	}
+
+	& Image.blocked {
+		wash-color: #f00;
+		opacity: 0.8;
+	}
+}
+
 .keypress {
 	flow-children: down;
 	margin: 35px;
