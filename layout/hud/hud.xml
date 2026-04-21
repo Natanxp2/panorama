@@ -11,7 +11,7 @@
 			<MomHudGhostEntities />
 			<MomHudConcEntities id="ConcEntities" />
 			<MomHudDamageIndicator />
-			<MomHudCgaz /> <!-- TODO: Not in customizer -->
+			<MomHudCgaz /> <!-- TODO: Not in customizer, waiting for c++ work -->
 			<MomHudReticle />
 		</Panel>
 
@@ -33,6 +33,7 @@
         <MomHudWeaponSelection id="WeaponSelection" /> 
 		
         <!-- Gamemode Specific HUD elements -->
+        <MomHudYawspeed id="Yawspeed" />
         <MomHudAmmo id="Ammo"/>
         <MomHudStrafeTrainer id="StrafeTrainer"/> 
         <MomHudJumpStats id="JumpStats"/>

@@ -1,0 +1,15 @@
+<root>
+    <styles>
+		<include src="file://{resources}/styles/main.scss" />
+	</styles>
+
+	<scripts>
+		<include type="module" src="file://{scripts}/hud/yaw-speed.ts" />
+	</scripts>
+
+	<MomHudYawspeed>
+        <Panel class="yawspeed">
+            <Label id="YawspeedLabel" class="yawspeed__label" text="" />
+        </Panel>
+	</MomHudYawspeed>
+</root>
