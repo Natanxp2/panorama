@@ -21,7 +21,8 @@ const ENTRY_HEIGHT = 32;
 const RUNS_PER_PAGE = 20;
 
 const GROUP_BORDER_LEFT_ALIGN = -10;
-const GROUP_BORDER_TOP_ALIGN = -13;
+const GROUP_BORDER_TOP_ALIGN = -12;
+const GROUP_BORDER_TOP_ALIGN_LAST = -14;
 
 exposeToPanelContext({ LeaderboardListType, LeaderboardType, LeaderboardRecordsFilter });
 @PanelHandler({ exposeToPanel: true })
@@ -176,21 +177,36 @@ export class LeaderboardsHandler {
 
 		this.panels.timesList.RemoveAndDeleteChildren();
 		this.panels.groupPillsLayer.RemoveAndDeleteChildren();
+
+		let awaitingBorder = false;
+		let matchedGroup: CompletionGroup | undefined;
+
 		data.records.forEach((record, index) => {
 			const lbEntry = $.CreatePanel('LeaderboardEntry', this.panels.timesList, '');
 			if (index === 0) lbEntry.AddClass('leaderboard-entry--first');
+
+			// Set data
 			lbEntry.SetDialogVariableInt('rank', record.rank);
 			lbEntry.SetDialogVariable('player', record.playerName);
 			lbEntry.SetDialogVariableFloat('time', record.runTime);
 
-			if (
-				this.state.filter === LeaderboardRecordsFilter.FRIENDS ||
-				this.state.filter === LeaderboardRecordsFilter.LOBBY
-			) {
-				this.createMembershipGroupIndicators(data.records, record.rank, lbEntry, index);
-			} else if (this.state.filter === LeaderboardRecordsFilter.GLOBAL) {
-				const matchedGroup: CompletionGroup | undefined = this.groupBoundaries[record.rank]?.group;
-				this.createBoundaryGroupIndicators(matchedGroup, lbEntry, index);
+			// Handle group boundaries
+
+			const isLast = index === data.records.length - 1;
+			if (awaitingBorder) {
+				const groupName = CompletionGroup[matchedGroup];
+				lbEntry.AddClass(`leaderboard-entry--top-group-${groupName}`);
+			}
+			//prettier-ignore
+			if (this.state.filter === LeaderboardRecordsFilter.FRIENDS || this.state.filter === LeaderboardRecordsFilter.LOBBY) {
+				// prettier-ignore
+				const groupData = this.createMembershipGroupIndicators(data.records, record.rank, lbEntry, index, isLast);
+				matchedGroup = groupData.matchedGroup;
+				awaitingBorder = groupData.awaitingBorder;
+			} 
+            else if (this.state.filter === LeaderboardRecordsFilter.GLOBAL) {
+				matchedGroup = this.groupBoundaries[record.rank]?.group;
+				awaitingBorder = this.createBoundaryGroupIndicators(matchedGroup, lbEntry, index, isLast);
 			}
 
 			const avatar = lbEntry.FindChildTraverse<AvatarImage>('LeaderboardEntryAvatarPanel');
@@ -198,49 +214,68 @@ export class LeaderboardsHandler {
 		});
 	}
 
-	private createBoundaryGroupIndicators(matchedGroup: CompletionGroup, lbEntry: LeaderboardEntry, index: number) {
-		if (matchedGroup !== undefined && matchedGroup !== CompletionGroup.WORLD_RECORD) {
-			const groupName = CompletionGroup[matchedGroup];
+	private createBoundaryGroupIndicators(
+		matchedGroup: CompletionGroup,
+		lbEntry: LeaderboardEntry,
+		index: number,
+		isLast: boolean
+	): boolean {
+		if (matchedGroup === undefined || matchedGroup === CompletionGroup.WORLD_RECORD) return false;
 
-			lbEntry.AddClass(`leaderboard-entry--group-${groupName}`);
+		const groupName = CompletionGroup[matchedGroup];
+		this.applyBottomBorder(lbEntry, isLast, groupName);
 
-			const borderY = (index + 1) * ENTRY_HEIGHT; // pixel Y of the border line
+		const borderY = (index + 1) * ENTRY_HEIGHT; // pixel Y of the border line
 
-			const pill = $.CreatePanel('GroupPill', this.panels.groupPillsLayer, '', {
-				class: 'group-pill group-pill--leaderboards-pill group-pill--solid'
-			});
-			pill.style.transform = `translate3d(${GROUP_BORDER_LEFT_ALIGN}px, ${borderY}px, 0px) translateY(${GROUP_BORDER_TOP_ALIGN}px)`;
-			pill.handler.setGroup(matchedGroup);
-		}
+		const pill = $.CreatePanel('GroupPill', this.panels.groupPillsLayer, '', {
+			class: 'group-pill group-pill--leaderboards-pill group-pill--solid'
+		});
+
+		const topAlign = isLast ? GROUP_BORDER_TOP_ALIGN_LAST : GROUP_BORDER_TOP_ALIGN;
+		pill.style.transform = `translate3d(${GROUP_BORDER_LEFT_ALIGN}px, ${borderY}px, 0px) translateY(${topAlign}px)`;
+		pill.handler.setGroup(matchedGroup);
+
+		return true;
 	}
 
 	private createMembershipGroupIndicators(
 		records: LeaderboardRecord[],
 		rank: number,
 		lbEntry: LeaderboardEntry,
-		index: number
-	) {
+		index: number,
+		isLast: boolean
+	): { matchedGroup: CompletionGroup | undefined; awaitingBorder: boolean } {
 		const currentGroup = this.getGroupForRank(rank);
-		if (currentGroup === undefined || currentGroup === CompletionGroup.WORLD_RECORD) return;
+		if (currentGroup === undefined || currentGroup === CompletionGroup.WORLD_RECORD) {
+			return { matchedGroup: undefined, awaitingBorder: false };
+		}
 
 		const nextRecord = records[index + 1];
-
 		if (nextRecord && this.getGroupForRank(nextRecord.rank) === currentGroup) {
-			return;
+			return { matchedGroup: undefined, awaitingBorder: false };
 		}
 
 		const groupName = CompletionGroup[currentGroup];
-
-		lbEntry.AddClass(`leaderboard-entry--group-${groupName}`);
+		this.applyBottomBorder(lbEntry, isLast, groupName);
 
 		const borderY = (index + 1) * ENTRY_HEIGHT;
-
 		const pill = $.CreatePanel('GroupPill', this.panels.groupPillsLayer, '', {
 			class: 'group-pill group-pill--leaderboards-pill group-pill--solid'
 		});
 
-		pill.style.transform = `translate3d(${GROUP_BORDER_LEFT_ALIGN}px, ${borderY}px, 0px) translateY(${GROUP_BORDER_TOP_ALIGN}px)`;
+		const topAlign = isLast ? GROUP_BORDER_TOP_ALIGN_LAST : GROUP_BORDER_TOP_ALIGN;
+		pill.style.transform = `translate3d(${GROUP_BORDER_LEFT_ALIGN}px, ${borderY}px, 0px) translateY(${topAlign}px)`;
 		pill.handler.setGroup(currentGroup);
+
+		return { matchedGroup: currentGroup, awaitingBorder: true };
+	}
+
+	private applyBottomBorder(lbEntry: LeaderboardEntry, isLast: boolean, groupName: string) {
+		if (isLast) {
+			lbEntry.AddClass(`leaderboard-entry--bottom-full-group-${groupName}`);
+		} else {
+			lbEntry.AddClass(`leaderboard-entry--bottom-group-${groupName}`);
+		}
 	}
 
 	previousPage() {

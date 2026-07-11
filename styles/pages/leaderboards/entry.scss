@@ -46,8 +46,14 @@ $entry-border: 1px solid rgba(44, 44, 44, 0.6);
 	}
 
 	@each $key, $colors in $colors-group-pill {
-		&--group-#{$key} {
+		&--bottom-full-group-#{$key} {
 			border-bottom: 4px solid map.get($colors, 'bg');
+		}
+		&--bottom-group-#{$key} {
+			border-bottom: 2px solid map.get($colors, 'bg');
+		}
+		&--top-group-#{$key} {
+			border-top: 2px solid map.get($colors, 'bg');
 		}
 	}
 
